@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 20
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: wot_mastery_development
+
+test:
+  <<: *default
+  database: wot_mastery_test
+
+production:
+  <<: *default
+  database: wot_mastery_production
+  username: wot_mastery
+  password: <%= ENV['WOT_MASTERY_DATABASE_PASSWORD'] %>
