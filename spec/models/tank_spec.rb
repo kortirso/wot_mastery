@@ -2,6 +2,7 @@
 
 RSpec.describe Tank, type: :model do
   it { is_expected.to belong_to :country }
+  it { is_expected.to have_many(:battle_results).dependent(:destroy) }
   it { is_expected.to validate_presence_of :name }
   it { is_expected.to validate_presence_of :type }
   it { is_expected.to validate_presence_of :tier }

@@ -5,6 +5,8 @@ class Tank < ApplicationRecord
 
   belongs_to :country
 
+  has_many :battle_results, dependent: :destroy
+
   enum type: { light: 0, medium: 1, heavy: 2, destroyer: 3, spg: 4 }
 
   validates :name, :type, :tier, presence: true

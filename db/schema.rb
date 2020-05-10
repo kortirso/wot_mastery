@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_10_124626) do
+ActiveRecord::Schema.define(version: 2020_05_10_130415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "battle_results", force: :cascade do |t|
+    t.integer "tank_id"
+    t.integer "experience"
+    t.integer "damage"
+    t.integer "assist"
+    t.integer "block"
+    t.integer "medal"
+    t.integer "source", default: 0, null: false
+    t.string "external_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tank_id"], name: "index_battle_results_on_tank_id"
+  end
 
   create_table "countries", force: :cascade do |t|
     t.jsonb "name"
