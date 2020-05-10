@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_10_122832) do
+ActiveRecord::Schema.define(version: 2020_05_10_124626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 2020_05_10_122832) do
     t.jsonb "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tanks", force: :cascade do |t|
+    t.jsonb "name"
+    t.integer "tier", default: 1, null: false
+    t.integer "type", default: 0, null: false
+    t.integer "country_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_tanks_on_country_id"
   end
 
 end
