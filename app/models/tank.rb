@@ -12,6 +12,8 @@ class Tank < ApplicationRecord
 
   enum type: { light: 0, medium: 1, heavy: 2, destroyer: 3, spg: 4 }
 
-  validates :name, :type, :tier, presence: true
+  validates :name, :type, :tier, :health, :damage_per_shot, presence: true
   validates :tier, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
+  validates :health, numericality: { greater_than_or_equal_to: 1 }
+  validates :damage_per_shot, numericality: { greater_than_or_equal_to: 1 }
 end

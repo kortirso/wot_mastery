@@ -8,5 +8,9 @@ RSpec.describe Tank, type: :model do
   it { is_expected.to validate_presence_of :name }
   it { is_expected.to validate_presence_of :type }
   it { is_expected.to validate_presence_of :tier }
+  it { is_expected.to validate_presence_of :health }
+  it { is_expected.to validate_presence_of :damage_per_shot }
   it { is_expected.to validate_numericality_of(:tier).is_greater_than_or_equal_to(1).is_less_than_or_equal_to(10) }
+  it { is_expected.to validate_numericality_of(:health).is_greater_than_or_equal_to(1) }
+  it { is_expected.to validate_numericality_of(:damage_per_shot).is_greater_than_or_equal_to(1) }
 end
