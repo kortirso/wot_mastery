@@ -2,12 +2,10 @@
 
 module Fetcher
   REGISTERED_SOURCES = {
-    Sourceable::WOT_REPLAYS => WotReplays
+    Sourceable::WOT_REPLAYS => Fetcher::WotReplays
   }.freeze
 
-  def self.call(tank:)
-    REGISTERED_SOURCES.each_value do |source|
-      "Fetcher::#{source}".constantize.new(tank: tank).call
-    end
+  def self.call(source:)
+    REGISTERED_SOURCES.fetch(source)
   end
 end

@@ -26,7 +26,7 @@ gem 'nokogiri', '~> 1.10'
 
 # Background Jobs
 gem 'redis-rails'
-gem 'sidekiq', '5.2.5'
+gem 'sidekiq', '6.0.7'
 
 # Different
 gem 'therubyracer', platforms: :ruby
