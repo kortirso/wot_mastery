@@ -61,16 +61,17 @@ module Fetcher
 
     def battle_result_params
       {
-        experience:  battle_result_param(2),
-        damage:      battle_result_param(4),
-        assist:      battle_result_param(5),
-        block:       battle_result_param(6),
-        tank:        tank,
-        source:      source,
-        medal:       @medal_info_block.empty? ? nil : medal_info,
-        win:         @title == BattleResult::WIN_TITLE,
-        date:        @date.nil? ? '' : Date.parse(@date),
-        external_id: @external_id
+        killed_amount: battle_result_param(1),
+        experience:    battle_result_param(2),
+        damage:        battle_result_param(4),
+        assist:        battle_result_param(5),
+        block:         battle_result_param(6),
+        tank:          tank,
+        source:        source,
+        medal:         @medal_info_block.empty? ? nil : medal_info,
+        win:           @title == BattleResult::WIN_TITLE,
+        date:          @date.nil? ? '' : Date.parse(@date),
+        external_id:   @external_id
       }
     end
 

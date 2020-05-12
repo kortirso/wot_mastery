@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_11_195152) do
+ActiveRecord::Schema.define(version: 2020_05_12_191022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_05_11_195152) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "win", default: false
     t.date "date"
+    t.integer "killed_amount", default: 0
     t.index ["external_id"], name: "index_battle_results_on_external_id"
     t.index ["tank_id"], name: "index_battle_results_on_tank_id"
   end
