@@ -47,8 +47,6 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   # N+1 query detector
   gem 'bullet'
-  # parallel_tests
-  gem 'parallel_tests'
 end
 
 group :development do
@@ -59,6 +57,7 @@ group :development do
 end
 
 group :test do
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
 end
