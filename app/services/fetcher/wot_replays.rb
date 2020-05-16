@@ -69,8 +69,8 @@ module Fetcher
         tank:          tank,
         source:        source,
         medal:         @medal_info_block.empty? ? nil : medal_info,
-        win:           @title == BattleResult::WIN_TITLE,
-        date:          @date.nil? ? '' : Date.parse(@date),
+        win:           @title ? @title.content == BattleResult::WIN_TITLE : false,
+        date:          @date.nil? ? '' : Date.parse(@date.content),
         external_id:   @external_id
       }
     end
