@@ -2,41 +2,45 @@
 
 require 'matrix'
 
-class Experience
+class TankExperienceCoefficients
   include WotMath
 
-  attr_reader :battle_results
+  attr_reader :tank, :battle_results
 
   SAMPLES_AMOUNT = 100
-  KILLED_AMOUNT_NORMALIZATION_KOEFFICIENT = 1_000
-  WIN_EXPERIENCE_KOEFFICIENT = 1.5
+  KILLED_AMOUNT_NORMALIZATION_COEFFICIENT = 1_000
+  WIN_EXPERIENCE_COEFFICIENT = 1.5
+  DB_COEFFICIENT = 1_000
 
-  def initialize
+  def initialize(tank:)
+    @tank           = tank
     @battle_results = valid_battle_results
   end
 
   def call
-    koefficients = calc_koefficients
+    coefficients = calc_coefficients
 
-    r_square(koefficients)
+    r_square(coefficients)
+    update_tank_coefficients(coefficients)
   end
 
   private
 
   def valid_battle_results
     BattleResult
+      .where(tank: tank)
       .where(medal: [2, 3])
       .where.not(experience: 0)
       .sample(SAMPLES_AMOUNT)
       .pluck(:killed_amount, :damage, :assist, :block, :experience, :win)
       .map do |elem|
-        elem[0] *= KILLED_AMOUNT_NORMALIZATION_KOEFFICIENT
-        elem[4] /= WIN_EXPERIENCE_KOEFFICIENT if elem[5]
+        elem[0] *= KILLED_AMOUNT_NORMALIZATION_COEFFICIENT
+        elem[4] /= WIN_EXPERIENCE_COEFFICIENT if elem[5]
         elem
       end
   end
 
-  def calc_koefficients
+  def calc_coefficients
     basis_determinant = basis_matrix.determinant
     {
       bonus:  change_column_in_basis_matrix(0) / basis_determinant,
@@ -47,8 +51,17 @@ class Experience
     }
   end
 
-  def r_square(koefficients)
-    1 - sum_squared_errors(koefficients) / total_sum_of_squares
+  def r_square(coefficients)
+    1 - sum_squared_errors(coefficients) / total_sum_of_squares
+  end
+
+  def update_tank_coefficients(coefficients)
+    tank_coefficients = Tanks::ExperienceCoefficient.find_or_initialize_by(tank_id: tank.id)
+    tank_coefficients.update(
+      coefficients.each do |key, value|
+        coefficients[key] = (value * DB_COEFFICIENT).round
+      end
+    )
   end
 
   # rubocop: disable Metrics/AbcSize
@@ -85,19 +98,19 @@ class Experience
     array_to_matrix(array).determinant * 1.0
   end
 
-  def sum_squared_errors(koefficients)
+  def sum_squared_errors(coefficients)
     battle_results.inject(0) do |acc, result|
-      acc + (result[4] - prediction(koefficients, result))**2
+      acc + (result[4] - prediction(coefficients, result))**2
     end
   end
 
   # rubocop: disable Metrics/AbcSize
-  def prediction(koefficients, result)
-    koefficients[:bonus] +
-      result[0] * koefficients[:kill] +
-      result[1] * koefficients[:damage] +
-      result[2] * koefficients[:assist] +
-      result[3] * koefficients[:block]
+  def prediction(coefficients, result)
+    coefficients[:bonus] +
+      result[0] * coefficients[:kill] +
+      result[1] * coefficients[:damage] +
+      result[2] * coefficients[:assist] +
+      result[3] * coefficients[:block]
   end
   # rubocop: enable Metrics/AbcSize
 

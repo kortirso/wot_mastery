@@ -5,6 +5,7 @@ RSpec.describe Tank, type: :model do
   it { is_expected.to have_many(:battle_results).dependent(:destroy) }
   it { is_expected.to have_many(:tank_externals).class_name('Tanks::External').dependent(:destroy) }
   it { is_expected.to have_one(:wot_replays_external).class_name('Tanks::External').inverse_of(:tank) }
+  it { is_expected.to have_one(:experience_coefficient).class_name('Tanks::ExperienceCoefficient') }
   it { is_expected.to validate_presence_of :name }
   it { is_expected.to validate_presence_of :type }
   it { is_expected.to validate_presence_of :tier }
