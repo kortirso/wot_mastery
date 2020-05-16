@@ -18,8 +18,10 @@ module Fetcher
     end
 
     def call
-      while page <= PAGE_LIMIT
-        read_page
+      loop do
+        break if page > PAGE_LIMIT
+        break unless read_page
+
         @page += 1
       end
     end
@@ -33,7 +35,7 @@ module Fetcher
         next unless @link_for_details
 
         @external_id = battle_external_id
-        next if BattleResult.find_by(external_id: @external_id)
+        break if BattleResult.find_by(external_id: @external_id)
 
         medal_info_block
         BattleResult.create!(battle_result_params)

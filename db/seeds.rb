@@ -24,3 +24,8 @@ is7 = Tank.create(
   name: { 'en' => 'IS-7', 'ru' => 'ИС-7' }, tier: 10, country: ussr, type: 2, health: 2_400, damage_per_shot: 490
 )
 Tanks::External.create(tank: is7, source: 0, external_id: '364-1046')
+
+is4 = Tank.create(
+  name: { 'en' => 'IS-4', 'ru' => 'ИС-4' }, tier: 10, country: ussr, type: 2, health: 2_500, damage_per_shot: 390
+)
+Tanks::External.create(tank: is4, source: 0, external_id: '369-808')
