@@ -4,4 +4,37 @@
   .container {
     @apply mx-auto;
   }
+
+  .form-dropdown {
+    @apply relative;
+
+    min-width: 12rem;
+
+    .form-dropdown-label {
+      @apply h-10 w-full rounded-lg text-sm px-4 py-2 cursor-pointer;
+      @apply bg-white text-gray-800;
+      @apply border border-blue-700;
+    }
+
+    .form-dropdown-list {
+      @apply absolute w-full left-0 px-4 py-2 flex;
+      @apply bg-white;
+      @apply border border-blue-700;
+
+      top: 100%;
+      border-top: none;
+      border-radius: 0 0 .5rem .5rem;
+
+      .form-dropdown-list-item {
+        @apply mr-4;
+      }
+    }
+
+    &.expanded {
+      .form-dropdown-label {
+        border-radius: .5rem .5rem 0 0;
+        border-bottom: none;
+      }
+    }
+  }
 }
