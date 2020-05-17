@@ -34,6 +34,9 @@ gem 'therubyracer', platforms: :ruby
 # Rules for migrations
 gem 'strong_migrations'
 
+# serialization
+gem 'fast_jsonapi'
+
 group :development, :test do
   gem 'database_cleaner'
   # Spec
@@ -57,6 +60,7 @@ group :development do
 end
 
 group :test do
+  gem 'json_spec'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false

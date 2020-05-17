@@ -7,6 +7,7 @@ FactoryBot.define do
     tier { 10 }
     health { 2_400 }
     damage_per_shot { 490 }
+    master_boundary { 1_000 }
     association :country
   end
 end

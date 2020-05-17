@@ -101,6 +101,37 @@
         </div>
       </div>
     </div>
-    <div x-ref='tanks' />
+    <div class='tanks-list' x-show='tanksList.length > 0'>
+      <table>
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Type</th>
+            <th>Tier</th>
+            <th>Vehicle name</th>
+            <th>1 grade</th>
+            <th>Master</th>
+            <th>Need only damage</th>
+            <th>Need success shots</th>
+            <th>Damage / HP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for='tank in tanksList' :key='tank.id'>
+            <tr class='tank'>
+              <td x-text='tank.attributes.country_name.en'></td>
+              <td x-text='tank.attributes.type'></td>
+              <td x-text='tank.attributes.tier'></td>
+              <td class='left' x-text='tank.attributes.name.en'></td>
+              <td x-text='tank.attributes.first_grade_boundary'></td>
+              <td x-text='tank.attributes.master_grade_boundary'></td>
+              <td x-text='tank.attributes.damage_for_master'></td>
+              <td x-text='tank.attributes.damage_for_master_per_shots'></td>
+              <td x-text='tank.attributes.damage_for_master_by_health'></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

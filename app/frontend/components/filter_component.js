@@ -5,6 +5,7 @@ window.components.filter = () => {
     types: [],
     tiers: [],
     tanks: [],
+    tanksList: [],
     toggle() { this.isOpen = !this.isOpen },
     toggleFilter(type, value) {
       let collection = this[type]
@@ -22,9 +23,9 @@ window.components.filter = () => {
     },
     apply() {
       const params = this.tanks.join(',')
-      fetch(`/tanks.html?tank_ids=${params}`)
-        .then(response => response.text())
-        .then(html => { this.$refs.tanks.innerHTML = html })
+      fetch(`/api/v1/tanks.json?tank_ids=${params}`)
+        .then(response => response.json())
+        .then(json => { this.tanksList = json.tanks.data })
       this.isOpen = false
     }
   }
