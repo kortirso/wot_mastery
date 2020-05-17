@@ -1,0 +1,25 @@
+.tanks-list {
+  @apply mt-4;
+
+  table {
+    thead {
+      tr {
+        th {
+          @apply font-normal py-1 px-4;
+        }
+      }
+    }
+
+    tbody {
+      tr.tank {
+        td {
+          @apply py-1 px-4 text-center font-light;
+
+          &.left {
+            @apply text-left;
+          }
+        }
+      }
+    }
+  }
+}

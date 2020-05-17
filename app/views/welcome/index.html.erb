@@ -1,91 +1,106 @@
 <div id='home-page'>
-  <div class='container mx-auto'>
-    <div class='dropdown-block' x-data='components.filter()'>
+  <div class='container mx-auto' x-data='components.filter()'>
+    <h1>WoT Mastery</h1>
+    <div class='dropdown-block'>
       <div class='form-dropdown' :class="{ 'expanded': isOpen }">
         <div class='form-dropdown-label' @click='toggle()'>Filters</div>
         <div class='form-dropdown-list' x-show='isOpen' @click.away='isOpen = false'>
-          <div class='form-dropdown-list-item'>
-            <% @countries.each do |country| %>
-              <div class='form-checkbox mb-2'>
-                <input id="country-<%= country.name['en'] %>" name="country-<%= country.name['en'] %>" class='form-checkbox-input' type='checkbox' />
-                <label class='form-label' for="country-<%= country.name['en'] %>"><%= country.name['en'] %></label>
-              </div>
-            <% end %>
+          <div class='form-dropdown-list-items'>
+            <div class='form-dropdown-list-item'>
+              <%- @countries.each do |country| %>
+                <div class='form-checkbox mb-2'>
+                  <input
+                    id="country-<%= country.name['en'] %>"
+                    name="country-<%= country.name['en'] %>"
+                    class='form-checkbox-input'
+                    type='checkbox'
+                    x-bind:checked='countries.includes(<%= country.id %>)'
+                  />
+                  <label
+                    class='form-label'
+                    for="country-<%= country.name['en'] %>"
+                    x-on:click.prevent
+                    @click="toggleFilter('countries', <%= country.id %>)"
+                  >
+                    <%= country.name['en'] %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+            <div class='form-dropdown-list-item'>
+              <%- @tank_types_filter_values.each do |element| %>
+                <div class='form-checkbox mb-2'>
+                  <input
+                    id='<%= element[0] %>'
+                    name='<%= element[0] %>'
+                    class='form-checkbox-input'
+                    type='checkbox'
+                    x-bind:checked='types.includes(<%= element[0] %>)'
+                  />
+                  <label
+                    class='form-label'
+                    for='<%= element[0] %>'
+                    x-on:click.prevent
+                    @click="toggleFilter('types', <%= element[0] %>)"
+                  >
+                    <%= element[1] %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+            <div class='form-dropdown-list-item'>
+              <%- %w[I II III IV V VI VII VIII IX X].each.with_index do |tier, index| %>
+                <div class='form-checkbox mb-2'>
+                  <input
+                    id='checkbox-tier-<%= index %>'
+                    name='checkbox-tier-<%= index %>'
+                    class='form-checkbox-input'
+                    type='checkbox'
+                    x-bind:checked='tiers.includes(<%= index + 1 %>)'
+                  />
+                  <label
+                    class='form-label'
+                    for='checkbox-tier-<%= index %>'
+                    x-on:click.prevent
+                    @click="toggleFilter('tiers', <%= index + 1 %>)"
+                  >
+                    <%= tier %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+            <div class='form-dropdown-list-item'>
+              <%- @tanks.each do |tank| %>
+                <div
+                  class='form-checkbox mb-2'
+                  x-show='(countries.length === 0 || countries.includes(<%= tank.country_id %>)) && (types.length === 0 || types.includes(<%= tank.type %>)) && (tiers.length === 0 || tiers.includes(<%= tank.tier %>))'
+                >
+                  <input
+                    id='tank-<%= tank.id %>'
+                    name='tank-<%= tank.id %>'
+                    class='form-checkbox-input'
+                    type='checkbox'
+                    x-bind:checked='tanks.includes(<%= tank.id %>)'
+                  />
+                  <label
+                    class='form-label'
+                    for='tank-<%= tank.id %>'
+                    x-on:click.prevent
+                    @click="toggleFilter('tanks', <%= tank.id %>)"
+                  >
+                    <%= tank.name['en'] %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
           </div>
-          <div class='form-dropdown-list-item'>
-            <div class='form-checkbox mb-2'>
-              <input id='light' name='light' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='light'>Light tanks</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='medium' name='medium' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='medium'>Medium tanks</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='heavy' name='heavy' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='heavy'>Heavy tanks</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='destroyed' name='destroyed' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='destroyed'>Tank destroyers</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='spg' name='spg' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='spg'>SPGs</label>
-            </div>
-          </div>
-          <div class='form-dropdown-list-item'>
-            <div class='form-checkbox mb-2'>
-              <input id='first' name='first' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='first'>I</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='second' name='second' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='second'>II</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='third' name='third' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='third'>III</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='forth' name='forth' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='forth'>IV</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='fifth' name='fifth' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='fifth'>V</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='sixth' name='sixth' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='sixth'>VI</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='seventh' name='seventh' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='seventh'>VII</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='eights' name='eights' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='eights'>VIII</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='ninth' name='ninth' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='ninth'>IX</label>
-            </div>
-            <div class='form-checkbox mb-2'>
-              <input id='tenth' name='tenth' class='form-checkbox-input' type='checkbox' />
-              <label class='form-label' for='tenth'>X</label>
-            </div>
-          </div>
-          <div class='form-dropdown-list-item'>
-            <% @tanks.each do |tank| %>
-              <div class='form-checkbox mb-2'>
-                <input id="tank-<%= tank.id %>" name="tank-<%= tank.id %>" class='form-checkbox-input' type='checkbox' />
-                <label class='form-label' for="tank-<%= tank.id %>"><%= tank.name['en'] %></label>
-              </div>
-            <% end %>
+          <div class='form-dropdown-actions'>
+            <a class='btn btn-reverse mr-4' x-on:click.prevent @click='resetFilters'>Reset</a>
+            <a class='btn' :class="{ 'disabled': tanks.length === 0 }" x-on:click.prevent @click='if (tanks.length !== 0) { apply() }'>Apply</a>
           </div>
         </div>
       </div>
     </div>
+    <div x-ref='tanks' />
   </div>
 </div>

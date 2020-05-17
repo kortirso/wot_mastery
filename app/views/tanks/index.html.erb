@@ -1,0 +1,32 @@
+<div class='tanks-list'>
+  <table>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Type</th>
+        <th>Tier</th>
+        <th>Vehicle name</th>
+        <th>1 grade</th>
+        <th>Master</th>
+        <th>Need only damage</th>
+        <th>Need success shots</th>
+        <th>Damage / HP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- @tanks.each do |tank| %>
+        <tr class='tank'>
+          <td><%= tank.country.name['en'] %></td>
+          <td><%= tank.type %></td>
+          <td><%= tank.tier %></td>
+          <td class='left'><%= tank.name['en'] %></td>
+          <td><%= tank.master_boundary * 95 / 99 %></td>
+          <td><%= tank.master_boundary %></td>
+          <td><%= (1000 * tank.master_boundary - tank.experience_coefficient.bonus) / tank.experience_coefficient.damage %></td>
+          <td><%= ((1000 * tank.master_boundary - tank.experience_coefficient.bonus) / tank.experience_coefficient.damage) / tank.damage_per_shot %></td>
+          <td><%= ((1000 * tank.master_boundary - tank.experience_coefficient.bonus) / tank.experience_coefficient.damage) / tank.health %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

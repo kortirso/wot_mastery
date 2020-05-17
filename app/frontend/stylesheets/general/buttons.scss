@@ -1,0 +1,18 @@
+.btn {
+  @apply rounded-lg text-base flex items-center justify-center cursor-pointer outline-none;
+  @apply bg-blue-700 text-white;
+
+  padding-left: 1.875rem;
+  padding-right: 1.875rem;
+  line-height: 138%;
+  white-space: nowrap;
+  height: 2.25rem;
+
+  &.btn-reverse {
+    @apply text-blue-700 bg-white border border-blue-700;
+  }
+
+  &.disabled {
+    opacity: .5;
+  }
+}
