@@ -6,6 +6,8 @@ window.components.filter = () => {
     tiers: [],
     tanks: [],
     tanksList: [],
+    sortField: '',
+    sortOrder: 1,
     toggle() { this.isOpen = !this.isOpen },
     toggleFilter(type, value) {
       let collection = this[type]
@@ -27,6 +29,14 @@ window.components.filter = () => {
         .then(response => response.json())
         .then(json => { this.tanksList = json.tanks.data })
       this.isOpen = false
+    },
+    sortBy(field) {
+      if (field === this.sortField) this.sortOrder = -this.sortOrder
+      else {
+        this.sortField = field
+        this.sortOrder = 1
+      }
+      this.tanksList.sort((a, b) => this.sortOrder * (a.attributes[field] - b.attributes[field]))
     }
   }
 }

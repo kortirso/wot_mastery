@@ -106,14 +106,14 @@
         <thead>
           <tr>
             <th>Country</th>
-            <th>Type</th>
-            <th>Tier</th>
+            <th @click="sortBy('type')">Type</th>
+            <th @click="sortBy('tier')">Tier</th>
             <th>Vehicle name</th>
-            <th>1 grade</th>
-            <th>Master</th>
-            <th>Need only damage</th>
-            <th>Need success shots</th>
-            <th>Damage / HP</th>
+            <th @click="sortBy('first_grade_boundary')">1 grade</th>
+            <th @click="sortBy('master_grade_boundary')">Master</th>
+            <th @click="sortBy('damage_for_master')">Need only damage</th>
+            <th @click="sortBy('damage_for_master_per_shots')">Need success shots</th>
+            <th @click="sortBy('damage_for_master_by_health')">Damage / HP</th>
           </tr>
         </thead>
         <tbody>
