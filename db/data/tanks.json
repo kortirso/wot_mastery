@@ -1,0 +1,4 @@
+[
+  { "tank" : { "name": { "en": "IS-7", "ru": "ИС-7" }, "tier": 10, "type": 2, "health": 2400, "damage_per_shot": 490 }, "external": { "source": 0, "external_id": "364-1046" }, "country": { "name": "USSR" } },
+  { "tank" : { "name": { "en": "IS-4", "ru": "ИС-4" }, "tier": 10, "type": 2, "health": 2500, "damage_per_shot": 390 }, "external": { "source": 0, "external_id": "369-808" }, "country": { "name": "USSR" } }
+]

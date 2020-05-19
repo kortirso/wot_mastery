@@ -1,31 +1,33 @@
 # frozen_string_literal: true
 
 # rubocop: disable Style/WordArray
-[
-  ['USSR', 'СССР'],
-  ['Germany', 'Германия'],
-  ['USA', 'США'],
-  ['France', 'Франция'],
-  ['UK', 'Великобритания'],
-  ['China', 'Китай'],
-  ['Poland', 'Польша'],
-  ['Czechoslovakia', 'Чехословакия'],
-  ['Japan', 'Япония'],
-  ['Sweden', 'Швеция'],
-  ['Italy', 'Италия']
-].each do |country|
-  Country.create(name: { 'en' => country[0], 'ru' => country[1] })
+if Country.count.zero?
+  [
+    ['USSR', 'СССР'],
+    ['Germany', 'Германия'],
+    ['USA', 'США'],
+    ['France', 'Франция'],
+    ['UK', 'Великобритания'],
+    ['China', 'Китай'],
+    ['Poland', 'Польша'],
+    ['Czechoslovakia', 'Чехословакия'],
+    ['Japan', 'Япония'],
+    ['Sweden', 'Швеция'],
+    ['Italy', 'Италия']
+  ].each do |country|
+    Country.create(name: { 'en' => country[0], 'ru' => country[1] })
+  end
 end
 # rubocop: enable Style/WordArray
 
-ussr = Country.find_by(name: { 'en' => 'USSR', 'ru' => 'СССР' })
+countries = Country.pluck(:name, :id).inject({}) { |acc, element| acc.merge(element[0]['en'] => element[1]) }
 
-is7 = Tank.create(
-  name: { 'en' => 'IS-7', 'ru' => 'ИС-7' }, tier: 10, country: ussr, type: 2, health: 2_400, damage_per_shot: 490
-)
-Tanks::External.create(tank: is7, source: 0, external_id: '364-1046')
+tanks_json = JSON.parse(File.read(Rails.root.join('db/data/tanks.json')))
+tanks_json.each do |tank_json|
+  tank = Tank.find_by(name: tank_json.dig('tank', 'name'))
+  next if tank
 
-is4 = Tank.create(
-  name: { 'en' => 'IS-4', 'ru' => 'ИС-4' }, tier: 10, country: ussr, type: 2, health: 2_500, damage_per_shot: 390
-)
-Tanks::External.create(tank: is4, source: 0, external_id: '369-808')
+  country_id = countries[tank_json.dig('country', 'name')]
+  tank = Tank.create(tank_json.fetch('tank').merge(country_id: country_id))
+  tank.tank_externals.create(tank_json.fetch('external'))
+end
