@@ -37,7 +37,7 @@ module Fetcher
         @external_id = battle_external_id
         break if BattleResult.find_by(external_id: @external_id)
 
-        medal_info_block
+        summary_info_block
         BattleResult.create!(battle_result_params)
       end
     end
@@ -54,11 +54,12 @@ module Fetcher
       @link_for_details.split('#')[0].split('/')[-1]
     end
 
-    def medal_info_block
+    def summary_info_block
       info = Nokogiri::HTML(URI.open("#{BASE_URL}#{@link_for_details}"))
       @title = info.css('.replay-stats__title')[0]
       @date = info.css('.replay-stats__timestamp')[0]
       @medal_info_block = info.css('.replay-stats__medals tbody > tr:nth-of-type(1) > td:nth-of-type(1) img')
+      @stun = stun_info(info)
     end
 
     def battle_result_params
@@ -68,6 +69,7 @@ module Fetcher
         damage:        battle_result_param(4),
         assist:        battle_result_param(5),
         block:         battle_result_param(6),
+        stun:          @stun,
         tank:          tank,
         source:        source,
         medal:         @medal_info_block.empty? ? nil : medal_info,
@@ -88,6 +90,11 @@ module Fetcher
       when BattleResult::SECOND_GRADE then 1
       when BattleResult::THIRD_GRADE then 0
       end
+    end
+
+    def stun_info(info)
+      content = info.css('.replay-stats__summary_effective')[6].content
+      content == '-' ? 0 : content.to_i
     end
   end
 end

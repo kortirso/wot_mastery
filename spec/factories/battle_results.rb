@@ -6,6 +6,7 @@ FactoryBot.define do
     damage { 2_000 }
     assist { 1_000 }
     block { 2_000 }
+    stun { 0 }
     medal { 2 }
     source { 0 }
     external_id { '7777777' }
