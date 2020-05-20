@@ -38,7 +38,7 @@ module Fetcher
         break if BattleResult.find_by(external_id: @external_id)
 
         summary_info_block
-        BattleResult.create!(battle_result_params)
+        BattleResult.create(battle_result_params)
       end
     end
 
@@ -93,7 +93,7 @@ module Fetcher
     end
 
     def stun_info(info)
-      content = info.css('.replay-stats__summary_effective')[6].content
+      content = info.css('.replay-stats__summary_effective')[6]&.content
       content == '-' ? 0 : content.to_i
     end
   end
