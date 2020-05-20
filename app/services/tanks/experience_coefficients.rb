@@ -6,7 +6,7 @@ module Tanks
   class ExperienceCoefficients
     include WotMath
 
-    attr_reader :tank, :tank_coef, :battle_results
+    attr_reader :tank, :tank_coef, :tank_coef_name, :battle_results
 
     SAMPLES_AMOUNT = 100
     KILLED_AMOUNT_NORMALIZATION_COEFFICIENT = 1_000
@@ -16,13 +16,13 @@ module Tanks
     def initialize(tank:)
       @tank           = tank
       @tank_coef      = tank.type == 'spg' ? 6 : 3
+      @tank_coef_name = tank.type == 'spg' ? :stun : :block
       @battle_results = valid_battle_results
     end
 
     def call
       coefficients = calc_coefficients
 
-      r_square(coefficients)
       update_tank_coefficients(coefficients)
     end
 
@@ -49,21 +49,23 @@ module Tanks
         kill:      change_column_in_basis_matrix(1) / basis_determinant,
         damage:    change_column_in_basis_matrix(2) / basis_determinant,
         assist:    change_column_in_basis_matrix(3) / basis_determinant,
-        tank_coef: change_column_in_basis_matrix(tank_coef) / basis_determinant
+        tank_coef: change_column_in_basis_matrix(4) / basis_determinant
       }
-    end
-
-    def r_square(coefficients)
-      1 - sum_squared_errors(coefficients) / total_sum_of_squares
     end
 
     def update_tank_coefficients(coefficients)
       tank_coefficients = Tanks::ExperienceCoefficient.find_or_initialize_by(tank_id: tank.id)
-      tank_coefficients.update(
-        coefficients.each do |key, value|
-          coefficients[key] = (value * DB_COEFFICIENT).round
-        end
-      )
+      precision = r_square(coefficients)
+      params = coefficients.merge(precision: precision).each_with_object({}) do |(key, value), acc|
+        key = tank_coef_name if key == :tank_coef
+        acc[key] = (value * DB_COEFFICIENT).round
+      end
+
+      tank_coefficients.update(params)
+    end
+
+    def r_square(coefficients)
+      1 - sum_squared_errors(coefficients) / total_sum_of_squares
     end
 
     # rubocop: disable Metrics/AbcSize

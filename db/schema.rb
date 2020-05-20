@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_140013) do
+ActiveRecord::Schema.define(version: 2020_05_20_151432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,13 +42,15 @@ ActiveRecord::Schema.define(version: 2020_05_20_140013) do
 
   create_table "experience_coefficients", force: :cascade do |t|
     t.integer "tank_id"
-    t.integer "bonus"
-    t.integer "kill"
-    t.integer "damage"
-    t.integer "assist"
-    t.integer "block"
+    t.integer "bonus", default: 0
+    t.integer "kill", default: 0
+    t.integer "damage", default: 0
+    t.integer "assist", default: 0
+    t.integer "block", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "precision", default: 0
+    t.integer "stun", default: 0
     t.index ["tank_id"], name: "index_experience_coefficients_on_tank_id"
   end
 
