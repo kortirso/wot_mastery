@@ -6,7 +6,7 @@ module Tanks
   class ExperienceCoefficients
     include WotMath
 
-    attr_reader :tank, :battle_results
+    attr_reader :tank, :tank_coef, :battle_results
 
     SAMPLES_AMOUNT = 100
     KILLED_AMOUNT_NORMALIZATION_COEFFICIENT = 1_000
@@ -15,6 +15,7 @@ module Tanks
 
     def initialize(tank:)
       @tank           = tank
+      @tank_coef      = tank.type == 'spg' ? 6 : 3
       @battle_results = valid_battle_results
     end
 
@@ -33,7 +34,7 @@ module Tanks
         .where(medal: [2, 3])
         .where.not(experience: 0)
         .sample(SAMPLES_AMOUNT)
-        .pluck(:killed_amount, :damage, :assist, :block, :experience, :win)
+        .pluck(:killed_amount, :damage, :assist, :block, :experience, :win, :stun)
         .map do |elem|
           elem[0] *= KILLED_AMOUNT_NORMALIZATION_COEFFICIENT
           elem[4] /= WIN_EXPERIENCE_COEFFICIENT if elem[5]
@@ -44,11 +45,11 @@ module Tanks
     def calc_coefficients
       basis_determinant = basis_matrix.determinant
       {
-        bonus:  change_column_in_basis_matrix(0) / basis_determinant,
-        kill:   change_column_in_basis_matrix(1) / basis_determinant,
-        damage: change_column_in_basis_matrix(2) / basis_determinant,
-        assist: change_column_in_basis_matrix(3) / basis_determinant,
-        block:  change_column_in_basis_matrix(4) / basis_determinant
+        bonus:     change_column_in_basis_matrix(0) / basis_determinant,
+        kill:      change_column_in_basis_matrix(1) / basis_determinant,
+        damage:    change_column_in_basis_matrix(2) / basis_determinant,
+        assist:    change_column_in_basis_matrix(3) / basis_determinant,
+        tank_coef: change_column_in_basis_matrix(tank_coef) / basis_determinant
       }
     end
 
@@ -68,18 +69,24 @@ module Tanks
     # rubocop: disable Metrics/AbcSize
     def basis_matrix
       @basis_matrix ||= Matrix[
-        [SAMPLES_AMOUNT, sum(0), sum(1), sum(2), sum(3)],
-        [sum(0), double_sum(0, 0), double_sum(0, 1), double_sum(0, 2), double_sum(0, 3)],
-        [sum(1), double_sum(1, 0), double_sum(1, 1), double_sum(1, 2), double_sum(1, 3)],
-        [sum(2), double_sum(2, 0), double_sum(2, 1), double_sum(2, 2), double_sum(2, 3)],
-        [sum(3), double_sum(3, 0), double_sum(3, 1), double_sum(3, 2), double_sum(3, 3)]
+        [SAMPLES_AMOUNT, sum(0), sum(1), sum(2), sum(tank_coef)],
+        [sum(0), double_sum(0, 0), double_sum(0, 1), double_sum(0, 2), double_sum(0, tank_coef)],
+        [sum(1), double_sum(1, 0), double_sum(1, 1), double_sum(1, 2), double_sum(1, tank_coef)],
+        [sum(2), double_sum(2, 0), double_sum(2, 1), double_sum(2, 2), double_sum(2, tank_coef)],
+        [
+          sum(tank_coef),
+          double_sum(tank_coef, 0),
+          double_sum(tank_coef, 1),
+          double_sum(tank_coef, 2),
+          double_sum(tank_coef, tank_coef)
+        ]
       ]
     end
     # rubocop: enable Metrics/AbcSize
 
     def result_matrix
       @result_matrix ||= [
-        sum(4), double_sum(0, 4), double_sum(1, 4), double_sum(2, 4), double_sum(3, 4)
+        sum(4), double_sum(0, 4), double_sum(1, 4), double_sum(2, 4), double_sum(tank_coef, 4)
       ]
     end
 
@@ -111,7 +118,7 @@ module Tanks
         result[0] * coefficients[:kill] +
         result[1] * coefficients[:damage] +
         result[2] * coefficients[:assist] +
-        result[3] * coefficients[:block]
+        result[tank_coef] * coefficients[:tank_coef]
     end
     # rubocop: enable Metrics/AbcSize
 
