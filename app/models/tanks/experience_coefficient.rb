@@ -7,10 +7,10 @@ module Tanks
     belongs_to :tank
 
     validates :bonus, :kill, :damage, :assist, :block, presence: true
-    validates :bonus, numericality: { greater_than_or_equal_to: 0 }
-    validates :kill, numericality: { greater_than_or_equal_to: 0 }
-    validates :damage, numericality: { greater_than_or_equal_to: 0 }
-    validates :assist, numericality: { greater_than_or_equal_to: 0 }
-    validates :block, numericality: { greater_than_or_equal_to: 0 }
+    validates :bonus, numericality: { only_integer: true }
+    validates :kill, numericality: { only_integer: true }
+    validates :damage, numericality: { only_integer: true }
+    validates :assist, numericality: { only_integer: true }
+    validates :block, numericality: { only_integer: true }
   end
 end

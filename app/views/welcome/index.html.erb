@@ -114,6 +114,7 @@
             <th @click="sortBy('damage_for_master')">Need only damage</th>
             <th @click="sortBy('damage_for_master_per_shots')">Need success shots</th>
             <th @click="sortBy('damage_for_master_by_health')">Damage / HP</th>
+            <th @click="sortBy('coefficient_precision')">Precision</th>
           </tr>
         </thead>
         <tbody>
@@ -128,6 +129,7 @@
               <td x-text='tank.attributes.damage_for_master'></td>
               <td x-text='tank.attributes.damage_for_master_per_shots'></td>
               <td x-text='tank.attributes.damage_for_master_by_health'></td>
+              <td x-text='tank.attributes.coefficient_precision'></td>
             </tr>
           </template>
         </tbody>

@@ -30,6 +30,10 @@ class TankSerializer
     object.master_boundary * FIRST_GRADE_QUALITY / MASTER_GRADE_QUALITY
   end
 
+  attribute :coefficient_precision do |object|
+    object.experience_coefficient.precision / 10.0
+  end
+
   def self.damage_for_master(object)
     return @damage_for_master if @current_object == object
 
