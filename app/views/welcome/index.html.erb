@@ -35,13 +35,13 @@
                     name='<%= tanks_type.name %>'
                     class='form-checkbox-input'
                     type='checkbox'
-                    x-bind:checked='types.includes(<%= tanks_type.name %>)'
+                    x-bind:checked='types.includes(<%= tanks_type.id %>)'
                   />
                   <label
                     class='form-label'
                     for='<%= tanks_type.name %>'
                     x-on:click.prevent
-                    @click="toggleFilter('types', <%= tanks_type.name %>)"
+                    @click="toggleFilter('types', <%= tanks_type.id %>)"
                   >
                     <%= tanks_type.value %>
                   </label>
@@ -73,7 +73,7 @@
               <%- @tanks.each do |tank| %>
                 <div
                   class='form-checkbox mb-2'
-                  x-show='(countries.length === 0 || countries.includes(<%= tank.country_id %>)) && (types.length === 0 || types.includes(<%= tank.tanks_type.name %>)) && (tiers.length === 0 || tiers.includes(<%= tank.tier %>))'
+                  x-show='(countries.length === 0 || countries.includes(<%= tank.country_id %>)) && (types.length === 0 || types.includes(<%= tank.tanks_type.id %>)) && (tiers.length === 0 || tiers.includes(<%= tank.tier %>))'
                 >
                   <input
                     id='tank-<%= tank.id %>'
@@ -96,7 +96,7 @@
           </div>
           <div class='form-dropdown-actions'>
             <a class='btn btn-reverse mr-4' x-on:click.prevent @click='resetFilters'>Reset</a>
-            <a class='btn' :class="{ 'disabled': tanks.length === 0 }" x-on:click.prevent @click='if (tanks.length !== 0) { apply() }'>Apply</a>
+            <a class='btn' :class="{ 'disabled': countries.length === 0 && types.length === 0 && tiers.length === 0 && tanks.length === 0 }" x-on:click.prevent @click='if (countries.length !== 0 || types.length !== 0 || tiers.length !== 0 || tanks.length !== 0) { apply() }'>Apply</a>
           </div>
         </div>
       </div>
