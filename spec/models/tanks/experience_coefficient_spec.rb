@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Tanks::ExperienceCoefficient, type: :model do
-  it { is_expected.to belong_to :tank }
+  it { is_expected.to belong_to :coefficientable }
   it { is_expected.to validate_presence_of :bonus }
   it { is_expected.to validate_presence_of :kill }
   it { is_expected.to validate_presence_of :damage }

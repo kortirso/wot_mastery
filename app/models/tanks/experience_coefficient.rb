@@ -4,7 +4,7 @@ module Tanks
   class ExperienceCoefficient < ApplicationRecord
     self.table_name = 'experience_coefficients'
 
-    belongs_to :tank
+    belongs_to :coefficientable, polymorphic: true
 
     validates :bonus, :kill, :damage, :assist, :block, presence: true
     validates :bonus, numericality: { only_integer: true }

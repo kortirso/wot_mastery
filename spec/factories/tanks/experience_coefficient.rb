@@ -7,6 +7,6 @@ FactoryBot.define do
     damage { 94 }
     assist { 60 }
     block { 26 }
-    association :tank
+    association :coefficientable, factory: :tank
   end
 end

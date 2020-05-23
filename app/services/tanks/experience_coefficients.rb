@@ -6,18 +6,17 @@ module Tanks
   class ExperienceCoefficients
     include WotMath
 
-    attr_reader :tank, :tank_coef, :tank_coef_name, :battle_results
+    attr_reader :object, :tank_coef, :tank_coef_name, :battle_results
 
-    SAMPLES_AMOUNT = 100
+    SAMPLES_AMOUNT = 200
     KILLED_AMOUNT_NORMALIZATION_COEFFICIENT = 1_000
     WIN_EXPERIENCE_COEFFICIENT = 1.5
     DB_COEFFICIENT = 1_000
 
-    def initialize(tank:)
-      @tank           = tank
-      @tank_coef      = tank.type == 'spg' ? 6 : 3
-      @tank_coef_name = tank.type == 'spg' ? :stun : :block
-      @battle_results = valid_battle_results
+    def initialize(object:)
+      @object = object
+      define_tank_coefficients
+      define_valid_battle_results
     end
 
     def call
@@ -28,9 +27,23 @@ module Tanks
 
     private
 
-    def valid_battle_results
+    def define_tank_coefficients
+      object.is_a?(Tank) ? tank_coefficients(object.tanks_type) : tank_coefficients(object)
+    end
+
+    def define_valid_battle_results
+      tank_ids = object.is_a?(Tank) ? [object.id] : object.tanks.ids
+      @battle_results = valid_battle_results(tank_ids)
+    end
+
+    def tank_coefficients(element)
+      @tank_coef      = element.name == 'spg' ? 6 : 3
+      @tank_coef_name = element.name == 'spg' ? :stun : :block
+    end
+
+    def valid_battle_results(tank_ids)
       BattleResult
-        .where(tank: tank)
+        .where(tank: tank_ids)
         .where(medal: [2, 3])
         .where.not(experience: 0)
         .sample(SAMPLES_AMOUNT)
@@ -54,7 +67,7 @@ module Tanks
     end
 
     def update_tank_coefficients(coefficients)
-      tank_coefficients = Tanks::ExperienceCoefficient.find_or_initialize_by(tank_id: tank.id)
+      tank_coefficients = Tanks::ExperienceCoefficient.find_or_initialize_by(coefficientable: object)
       precision = r_square(coefficients)
       params = coefficients.merge(precision: precision).each_with_object({}) do |(key, value), acc|
         key = tank_coef_name if key == :tank_coef

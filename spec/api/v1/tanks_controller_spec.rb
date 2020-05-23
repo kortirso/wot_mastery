@@ -4,7 +4,7 @@ RSpec.describe Api::V1::TanksController do
   describe 'GET#index' do
     before do
       tank = create :tank
-      create :tank_experience_coefficient, tank: tank
+      create :tank_experience_coefficient, coefficientable: tank
 
       get '/api/v1/tanks.json', params: { tank_ids: tank.id }
     end
