@@ -21,7 +21,7 @@ module Api
 
         @tanks = @tanks.where(country_id: parse_params(params[:country_ids])) if params[:country_ids]
         @tanks = @tanks.where(tanks_type_id: parse_params(params[:type_ids])) if params[:type_ids]
-        @tanks = @tanks.where(tiers: parse_params(params[:tiers])) if params[:tiers]
+        @tanks = @tanks.where(tier: parse_params(params[:tiers])) if params[:tiers]
         @tanks = @tanks.where(id: parse_params(params[:tank_ids])) if params[:tank_ids]
       end
       # rubocop: enable Metrics/AbcSize
