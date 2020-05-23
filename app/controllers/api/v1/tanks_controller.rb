@@ -15,9 +15,10 @@ module Api
         tank_ids = params[:tank_ids]&.split(',')&.map(&:to_i)
         @tanks =
           Tank
+            .includes(:country, :experience_coefficient, :tanks_type)
             .where(id: tank_ids)
-            .order(tier: :asc, country_id: :asc, type: :asc)
-            .includes(:country, :experience_coefficient)
+            .order(tier: :asc, country_id: :asc)
+            .order('tanks_types.name ASC')
       end
     end
   end

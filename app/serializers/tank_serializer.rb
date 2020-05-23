@@ -7,8 +7,12 @@ class TankSerializer
   FIRST_GRADE_QUALITY = 95
 
   set_type :tank
-  attributes :name, :type, :tier
+  attributes :name, :tier
   attribute :master_grade_boundary, &:master_boundary
+
+  attribute :type do |object|
+    object.tanks_type.name
+  end
 
   attribute :country_name do |object|
     object.country.name

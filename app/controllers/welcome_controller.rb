@@ -3,7 +3,7 @@
 class WelcomeController < ApplicationController
   before_action :countries
   before_action :tanks
-  before_action :tank_types_filter_values
+  before_action :tanks_types
 
   def index; end
 
@@ -14,16 +14,10 @@ class WelcomeController < ApplicationController
   end
 
   def tanks
-    @tanks = Tank.order(id: :asc)
+    @tanks = Tank.order(id: :asc).includes(:tanks_type)
   end
 
-  def tank_types_filter_values
-    @tank_types_filter_values = [
-      %w[light Light\ tanks],
-      %w[medium Medium\ tanks],
-      %w[heavy Heavy\ tanks],
-      %w[destroyer Tank\ destroyers],
-      %w[spg SPGs]
-    ]
+  def tanks_types
+    @tanks_types = Tanks::Type.order(id: :asc)
   end
 end

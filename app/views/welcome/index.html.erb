@@ -28,22 +28,22 @@
               <% end %>
             </div>
             <div class='form-dropdown-list-item'>
-              <%- @tank_types_filter_values.each do |element| %>
+              <%- @tanks_types.each do |tanks_type| %>
                 <div class='form-checkbox mb-2'>
                   <input
-                    id='<%= element[0] %>'
-                    name='<%= element[0] %>'
+                    id='<%= tanks_type.name %>'
+                    name='<%= tanks_type.name %>'
                     class='form-checkbox-input'
                     type='checkbox'
-                    x-bind:checked='types.includes(<%= element[0] %>)'
+                    x-bind:checked='types.includes(<%= tanks_type.name %>)'
                   />
                   <label
                     class='form-label'
-                    for='<%= element[0] %>'
+                    for='<%= tanks_type.name %>'
                     x-on:click.prevent
-                    @click="toggleFilter('types', <%= element[0] %>)"
+                    @click="toggleFilter('types', <%= tanks_type.name %>)"
                   >
-                    <%= element[1] %>
+                    <%= tanks_type.value %>
                   </label>
                 </div>
               <% end %>
@@ -73,7 +73,7 @@
               <%- @tanks.each do |tank| %>
                 <div
                   class='form-checkbox mb-2'
-                  x-show='(countries.length === 0 || countries.includes(<%= tank.country_id %>)) && (types.length === 0 || types.includes(<%= tank.type %>)) && (tiers.length === 0 || tiers.includes(<%= tank.tier %>))'
+                  x-show='(countries.length === 0 || countries.includes(<%= tank.country_id %>)) && (types.length === 0 || types.includes(<%= tank.tanks_type.name %>)) && (tiers.length === 0 || tiers.includes(<%= tank.tier %>))'
                 >
                   <input
                     id='tank-<%= tank.id %>'

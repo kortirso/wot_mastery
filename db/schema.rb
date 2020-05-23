@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_151432) do
+ActiveRecord::Schema.define(version: 2020_05_23_103359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,14 +66,22 @@ ActiveRecord::Schema.define(version: 2020_05_20_151432) do
   create_table "tanks", force: :cascade do |t|
     t.jsonb "name"
     t.integer "tier", default: 1, null: false
-    t.integer "type", default: 0, null: false
     t.integer "country_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "health"
     t.integer "damage_per_shot"
     t.integer "master_boundary"
+    t.integer "tanks_type_id"
     t.index ["country_id"], name: "index_tanks_on_country_id"
+    t.index ["tanks_type_id"], name: "index_tanks_on_tanks_type_id"
+  end
+
+  create_table "tanks_types", force: :cascade do |t|
+    t.integer "name", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "value"
   end
 
 end
