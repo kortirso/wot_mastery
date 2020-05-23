@@ -1,6 +1,6 @@
 [
   { "tank" : { "name": { "en": "IS-7", "ru": "ИС-7" }, "tier": 10, "type": 2, "health": 2400, "damage_per_shot": 490 }, "external": { "source": 0, "external_id": "364-1046" }, "country": { "name": "USSR" } },
-  { "tank" : { "name": { "en": "IS-4", "ru": "ИС-4" }, "tier": 10, "type": 2, "health": 2500, "damage_per_shot": 390 }, "external": { "source": 0, "external_id": "369-808" }, "country": { "name": "USSR" } },
+  { "tank" : { "name": { "en": "IS-4", "ru": "ИС-4" }, "tier": 10, "type": 2, "health": 2500, "damage_per_shot": 440 }, "external": { "source": 0, "external_id": "369-808" }, "country": { "name": "USSR" } },
   { "tank" : { "name": { "en": "T-100 LT", "ru": "Т-100 ЛТ" }, "tier": 10, "type": 0, "health": 1500, "damage_per_shot": 300 }, "external": { "source": 0, "external_id": "1270" }, "country": { "name": "USSR" } },
   { "tank" : { "name": { "en": "K-91", "ru": "К-91" }, "tier": 10, "type": 1, "health": 1950, "damage_per_shot": 320 }, "external": { "source": 0, "external_id": "1349" }, "country": { "name": "USSR" } },
   { "tank" : { "name": { "en": "Object 140", "ru": "Объект 140" }, "tier": 10, "type": 1, "health": 1900, "damage_per_shot": 320 }, "external": { "source": 0, "external_id": "704-1054" }, "country": { "name": "USSR" } },
