@@ -102,38 +102,34 @@
       </div>
     </div>
     <div class='tanks-list' x-show='tanksList.length > 0'>
-      <table>
-        <thead>
-          <tr>
-            <th>Country</th>
-            <th @click="sortBy('type')">Type</th>
-            <th @click="sortBy('tier')">Tier</th>
-            <th>Vehicle name</th>
-            <th @click="sortBy('first_grade_boundary')">1 grade</th>
-            <th @click="sortBy('master_grade_boundary')">Master</th>
-            <th @click="sortBy('damage_for_master')">Need only damage</th>
-            <th @click="sortBy('damage_for_master_per_shots')">Need success shots</th>
-            <th @click="sortBy('damage_for_master_by_health')">Damage / HP</th>
-            <th @click="sortBy('coefficient_precision')">Precision</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template x-for='tank in tanksList' :key='tank.id'>
-            <tr class='tank'>
-              <td x-text='tank.attributes.country_name.en'></td>
-              <td x-text='tank.attributes.type'></td>
-              <td x-text='tank.attributes.tier'></td>
-              <td class='left' x-text='tank.attributes.name.en'></td>
-              <td x-text='tank.attributes.first_grade_boundary'></td>
-              <td x-text='tank.attributes.master_grade_boundary'></td>
-              <td x-text='tank.attributes.damage_for_master'></td>
-              <td x-text='tank.attributes.damage_for_master_per_shots'></td>
-              <td x-text='tank.attributes.damage_for_master_by_health'></td>
-              <td x-text='tank.attributes.coefficient_precision'></td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
+      <div class='tanks-list-header'>
+        <div class='flag'>Country</div>
+        <div class='type' @click="sortBy('type')">Type</div>
+        <div class='tier' @click="sortBy('tier')">Tier</div>
+        <div class='name'>Vehicle name</div>
+        <div class='first-grade' @click="sortBy('first_grade_boundary')"><span /></div>
+        <div class='master-grade' @click="sortBy('master_grade_boundary')"><span /></div>
+        <div class='additional' @click="sortBy('damage_for_master')">NOD</div>
+        <div class='additional' @click="sortBy('damage_for_master_per_shots')">NSS</div>
+        <div class='additional' @click="sortBy('damage_for_master_by_health')">Damage / HP</div>
+        <div class='additional' @click="sortBy('coefficient_precision')">Precision</div>
+        <div class='additional'></div>
+      </div>
+      <template x-for='tank in tanksList' :key='tank.id'>
+        <div class='tank'>
+          <div class='flag' :type='tank.attributes.country_name.en'><span /></div>
+          <div class='type' :type='tank.attributes.type'><span /></div>
+          <div class='tier' x-text='tank.attributes.tier'></div>
+          <div class='name' x-text='tank.attributes.name.en'></div>
+          <div class='first-grade' x-text='tank.attributes.first_grade_boundary'></div>
+          <div class='master-grade' x-text='tank.attributes.master_grade_boundary'></div>
+          <div class='additional' x-text='tank.attributes.damage_for_master'></div>
+          <div class='additional' x-text='tank.attributes.damage_for_master_per_shots'></div>
+          <div class='additional' x-text='tank.attributes.damage_for_master_by_health'></div>
+          <div class='additional' x-text='tank.attributes.coefficient_precision'></div>
+          <div class='additional'></div>
+        </div>
+      </template>
     </div>
   </div>
 </div>

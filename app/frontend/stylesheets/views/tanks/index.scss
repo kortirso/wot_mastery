@@ -1,24 +1,107 @@
 .tanks-list {
   @apply mt-4;
 
-  table {
-    thead {
-      tr {
-        th {
-          @apply font-normal py-1 px-4;
-        }
+  .tanks-list-header, .tank {
+    @apply flex;
+
+    .flag, .type, .tier {
+      @apply flex items-center justify-center;
+
+      width: 5%;
+    }
+
+    .name {
+      @apply flex items-center;
+
+      width: 25%;
+    }
+
+    .first-grade, .master-grade, .additional {
+      @apply flex items-center justify-center;
+
+      width: 10%;
+    }
+  }
+
+  .tanks-list-header {
+    @apply px-4 mb-2;
+
+    & > div {
+      @apply cursor-pointer;
+    }
+
+    .first-grade {
+      span {
+        background: url(../images/icons.png);
+        background-position: -39px -81px;
+        background-size: 150%;
+        width: 20px;
+        height: 20px;
       }
     }
 
-    tbody {
-      tr.tank {
-        td {
-          @apply py-1 px-4 text-center font-light;
+    .master-grade {
+      span {
+        background: url(../images/icons.png);
+        background-position: -39px 0;
+        background-size: 150%;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
 
-          &.left {
-            @apply text-left;
-          }
-        }
+  .tank {
+    @apply mb-2 p-4 border border-gray-300 bg-white cursor-pointer;
+
+    border-radius: .5rem;
+
+    &:hover {
+      border-color: transparent;
+      box-shadow: 0 .25rem 1.5rem rgba(31, 33, 44, 0.12);
+    }
+
+    .flag {
+      span {
+        width: 29px;
+        height: 18px;
+      }
+
+      &[type=ussr] span {
+        background: url(../images/icons.png);
+        background-position: 0 0;
+      }
+    }
+
+    .type {
+      &[type=light] span {
+        background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTMiIHZpZXdCb3g9IjAgMCAxMSAxMyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNS41IDAgTCAwIDYuNSA1LjUgMTMgMTEgNi41eiIgZmlsbD0iIzcxODA5NiIgLz48L3N2Zz4=) no-repeat 50% 50%;
+        width: 15px;
+        height: 18px;
+      }
+
+      &[type=medium] span {
+        background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTUiIHZpZXdCb3g9IjAgMCAxMiAxNSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgNy41TDkuNyA0LjdsLTYgNy41TDYgMTV6TTYgMEwwIDcuNWwyLjMgMi44IDYtNy41eiIgZmlsbD0iIzcxODA5NiIgZmlsbC1ydWxlPSJldmVub2RkIiAvPjwvc3ZnPg==) no-repeat 50% 50%;
+        width: 15px;
+        height: 18px;
+      }
+
+      &[type=heavy] span {
+        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTUgMTgiIHdpZHRoPSIxNSIgaGVpZ2h0PSIxOCI+PHN0eWxlPi5zdDB7ZmlsbDojNzE4MDk2fTwvc3R5bGU+PGcgaWQ9IlhNTElEXzFfIj48cGF0aCBpZD0iWE1MSURfOV8iIGNsYXNzPSJzdDAiIGQ9Ik0xMy4yIDYuOGwtNy41IDkuMUw3LjUgMTggMTUgOXoiLz48cGF0aCBpZD0iWE1MSURfMTBfIiBjbGFzcz0ic3QwIiBkPSJNMTAuMyAzLjRsLTcuNCA5LjEgMS44IDIuMSA3LjQtOXoiLz48cGF0aCBpZD0iWE1MSURfMTFfIiBjbGFzcz0ic3QwIiBkPSJNNy41IDBMMCA5bDEuOSAyLjIgNy40LTl6Ii8+PC9nPjwvc3ZnPg==) no-repeat 50% 50%;
+        width: 15px;
+        height: 18px;
+      }
+
+      &[type=destroyer] span {
+        background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMiAxMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwbDYgMTAgNi0xMHoiIGZpbGw9IiM3MTgwOTYiIC8+PC9zdmc+) no-repeat 50% 50%;
+        width: 15px;
+        height: 18px;
+      }
+
+      &[type=spg] span {
+        background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwaDEwdjEwSDB6IiBmaWxsPSIjNzE4MDk2IiAvPjwvc3ZnPg==) no-repeat 50% 50%;
+        width: 15px;
+        height: 18px;
       }
     }
   }

@@ -36,8 +36,9 @@
           @apply mr-8;
 
           &.limited {
+            @apply pr-8 overflow-y-scroll;
+
             max-height: 20rem;
-            overflow-y: scroll;
           }
         }
       }
