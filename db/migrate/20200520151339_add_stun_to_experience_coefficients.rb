@@ -7,5 +7,4 @@ class AddStunToExperienceCoefficients < ActiveRecord::Migration[6.0]
   def down
     remove_column :experience_coefficients, :stun
   end
-  end
 end
