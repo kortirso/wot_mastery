@@ -28,6 +28,7 @@ gem 'nokogiri', '~> 1.10'
 gem 'redis-namespace'
 gem 'redis-rails'
 gem 'sidekiq', '6.0.7'
+gem 'whenever', require: false
 
 # Different
 gem 'therubyracer', platforms: :ruby
