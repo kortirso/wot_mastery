@@ -27,8 +27,8 @@ gem 'nokogiri', '~> 1.10'
 # Background Jobs
 gem 'redis-namespace'
 gem 'redis-rails'
-gem 'sidekiq', '6.0.7'
-gem 'whenever', require: false
+# gem 'sidekiq', '6.0.7'
+# gem 'whenever', require: false
 
 # Different
 gem 'therubyracer', platforms: :ruby
@@ -62,7 +62,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails', '~> 1.3', require: false
   gem 'capistrano-rvm', require: false
-  gem 'capistrano-sidekiq'
+  # gem 'capistrano-sidekiq'
   gem 'listen', '~> 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

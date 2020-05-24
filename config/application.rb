@@ -48,6 +48,6 @@ module WotMastery
     end
 
     config.autoload_paths += %W[#{config.root}/app/jobs]
-    config.active_job.queue_adapter = :sidekiq
+    # config.active_job.queue_adapter = :sidekiq
   end
 end
