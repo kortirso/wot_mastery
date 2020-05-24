@@ -42,6 +42,9 @@ gem 'fast_jsonapi'
 # localize
 gem 'route_translator', '~> 8.0'
 
+# monitoring
+gem 'skylight'
+
 group :development, :test do
   gem 'database_cleaner'
   # Spec
