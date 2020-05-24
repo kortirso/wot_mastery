@@ -1,6 +1,11 @@
 # config valid for current version and patch releases of Capistrano
 lock '~> 3.14.0'
 
+# Fetch ruby version from .ruby-version
+set :rvm_ruby_version, File.read('.ruby-version').strip
+
+set :rvm_type, :user
+
 set :application, 'wot_mastery'
 set :repo_url, 'git@github.com:kortirso/wot_mastery.git'
 
