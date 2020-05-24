@@ -10,7 +10,7 @@ module Api
       private
 
       def set_locale
-        I18n.locale = params[:locale] || :en
+        I18n.locale = params[:locale] || :ru
       end
     end
   end

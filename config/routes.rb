@@ -7,5 +7,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'welcome#index'
+  localized do
+    root to: 'welcome#index'
+  end
 end

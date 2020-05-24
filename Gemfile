@@ -37,6 +37,9 @@ gem 'strong_migrations'
 # serialization
 gem 'fast_jsonapi'
 
+# localize
+gem 'route_translator', '~> 8.0'
+
 group :development, :test do
   gem 'database_cleaner'
   # Spec

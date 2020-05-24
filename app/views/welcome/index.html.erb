@@ -3,7 +3,7 @@
     <h1>WoT Mastery</h1>
     <div class='dropdown-block'>
       <div class='form-dropdown' :class="{ 'expanded': isOpen }">
-        <div class='form-dropdown-label' @click='toggle()'>Filters</div>
+        <div class='form-dropdown-label' @click='toggle()'><%= t('welcome.filters') %></div>
         <div class='form-dropdown-list' x-show='isOpen' @click.away='isOpen = false'>
           <div class='form-dropdown-list-items'>
             <div class='form-dropdown-list-item'>
@@ -22,13 +22,13 @@
                     x-on:click.prevent
                     @click="toggleFilter('countries', <%= country.id %>)"
                   >
-                    <%= country.name['en'] %>
+                    <%= country.name[I18n.locale.to_s] %>
                   </label>
                 </div>
               <% end %>
             </div>
             <div class='form-dropdown-list-item'>
-              <%- @tanks_types.each do |tanks_type| %>
+              <%- @tanks_types.each.with_index do |tanks_type, index| %>
                 <div class='form-checkbox mb-2'>
                   <input
                     id='<%= tanks_type.name %>'
@@ -43,7 +43,7 @@
                     x-on:click.prevent
                     @click="toggleFilter('types', <%= tanks_type.id %>)"
                   >
-                    <%= tanks_type.value %>
+                    <%= Tanks::Type::TYPE_VALUES[index][I18n.locale.to_s] %>
                   </label>
                 </div>
               <% end %>
@@ -88,7 +88,7 @@
                     x-on:click.prevent
                     @click="toggleFilter('tanks', <%= tank.id %>)"
                   >
-                    <%= tank.name['en'] %>
+                    <%= tank.name[I18n.locale.to_s] %>
                   </label>
                 </div>
               <% end %>
@@ -103,33 +103,33 @@
     </div>
     <div class='tanks-list' x-show='tanksList.length > 0'>
       <div class='tanks-list-header'>
-        <div class='flag'>Country</div>
-        <div class='type' @click="sortBy('type')">Type</div>
-        <div class='tier' @click="sortBy('tier')">Tier</div>
-        <div class='name'>Vehicle name</div>
+        <div class='flag'><%= t('tanks_list.header.country') %></div>
+        <div class='type' @click="sortBy('type')"><%= t('tanks_list.header.type') %></div>
+        <div class='tier' @click="sortBy('tier')"><%= t('tanks_list.header.tier') %></div>
+        <div class='name'><%= t('tanks_list.header.name') %></div>
         <div class='first-grade hoverable' @click="sortBy('first_grade_boundary')">
           <span class='icon' />
-          <span class='tooltip'>Experience for first grade</span>
+          <span class='tooltip'><%= t('tanks_list.header.first') %></span>
         </div>
         <div class='master-grade hoverable' @click="sortBy('master_grade_boundary')">
           <span class='icon' />
-          <span class='tooltip'>Experience for master grade</span>
+          <span class='tooltip'><%= t('tanks_list.header.master') %></span>
         </div>
         <div class='additional hoverable' @click="sortBy('damage_for_master')">
-          NOD
-          <span class='tooltip'>Need only damage</span>
+          <%= t('tanks_list.header.nod') %>
+          <span class='tooltip'><%= t('tanks_list.header.nod_full') %></span>
         </div>
         <div class='additional hoverable' @click="sortBy('damage_for_master_per_shots')">
-          NSS
-          <span class='tooltip'>Need success shots</span>
+          <%= t('tanks_list.header.nss') %>
+          <span class='tooltip'><%= t('tanks_list.header.nss_full') %></span>
         </div>
         <div class='additional hoverable' @click="sortBy('damage_for_master_by_health')">
-          Damage / HP
-          <span class='tooltip'>Need damage per vehicle health</span>
+          <%= t('tanks_list.header.damage_hp') %>
+          <span class='tooltip'><%= t('tanks_list.header.damage_hp_full') %></span>
         </div>
         <div class='additional hoverable' @click="sortBy('coefficient_precision')">
-          Precision
-          <span class='tooltip'>Prediction precision</span>
+          <%= t('tanks_list.header.precision') %>
+          <span class='tooltip'><%= t('tanks_list.header.precision_full') %></span>
         </div>
         <div class='additional'></div>
       </div>
@@ -138,7 +138,7 @@
           <div class='flag' :type='tank.attributes.country_name.en'><span /></div>
           <div class='type' :type='tank.attributes.type'><span /></div>
           <div class='tier' x-text='tank.attributes.tier'></div>
-          <div class='name' x-text='tank.attributes.name.en'></div>
+          <div class='name' x-text="tank.attributes.name['<%= I18n.locale %>']"></div>
           <div class='first-grade' x-text='tank.attributes.first_grade_boundary'></div>
           <div class='master-grade' x-text='tank.attributes.master_grade_boundary'></div>
           <div class='additional' x-text='tank.attributes.damage_for_master'></div>

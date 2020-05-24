@@ -56,6 +56,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.0)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
@@ -113,6 +115,7 @@ GEM
     parser (2.7.1.2)
       ast (~> 2.4.0)
     pg (1.2.3)
+    public_suffix (4.0.5)
     puma (4.3.3)
       nio4r (~> 2.0)
     rack (2.2.2)
@@ -176,6 +179,10 @@ GEM
       redis (>= 4, < 5)
     ref (2.0.0)
     rexml (3.2.4)
+    route_translator (8.0.0)
+      actionpack (>= 5.0.0.1, < 6.1)
+      activesupport (>= 5.0.0.1, < 6.1)
+      addressable (~> 2.7)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -275,6 +282,7 @@ DEPENDENCIES
   rails (~> 6.0.3)
   rails-controller-testing
   redis-rails
+  route_translator (~> 8.0)
   rspec-rails
   rubocop
   rubocop-performance

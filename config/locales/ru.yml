@@ -1,0 +1,19 @@
+ru:
+  welcome:
+    filters: Фильтры
+  tanks_list:
+    header:
+      country: Нация
+      type: Тип
+      tier: Уровень
+      name: Название
+      first: Опыт для первой степени
+      master: Опыт для мастера
+      nod: НУ
+      nod_full: Необходимый урон
+      nss: НУВ
+      nss_full: Необходимо успешных выстрелов
+      damage_hp: Урон / прочность
+      damage_hp_full: Необходимо урона на прочность техники
+      precision: Точность
+      precision_full: Точность предсказания

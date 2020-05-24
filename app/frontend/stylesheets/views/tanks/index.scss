@@ -4,16 +4,22 @@
   .tanks-list-header, .tank {
     @apply flex;
 
-    .flag, .type, .tier {
+    .flag, .type {
       @apply flex items-center justify-center;
 
       width: 5%;
     }
 
+    .tier {
+      @apply flex items-center justify-center;
+
+      width: 7.5%;
+    }
+
     .name {
       @apply flex items-center;
 
-      width: 25%;
+      width: 22.5%;
     }
 
     .first-grade, .master-grade, .additional {
