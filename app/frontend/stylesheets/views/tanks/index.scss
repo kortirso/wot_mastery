@@ -21,6 +21,25 @@
 
       width: 10%;
     }
+
+    .hoverable {
+      .tooltip {
+        display: none;
+      }
+
+      &:hover {
+        @apply relative;
+
+        .tooltip {
+          @apply block absolute bg-white border border-blue-700 px-2;
+
+          white-space: nowrap;
+          border-radius: .25rem;
+          bottom: 100%;
+          left: 50%;
+        }
+      }
+    }
   }
 
   .tanks-list-header {
@@ -31,7 +50,7 @@
     }
 
     .first-grade {
-      span {
+      .icon {
         background: url(../images/icons.png);
         background-position: -39px -81px;
         background-size: 150%;
@@ -41,7 +60,7 @@
     }
 
     .master-grade {
-      span {
+      .icon {
         background: url(../images/icons.png);
         background-position: -39px 0;
         background-size: 150%;
