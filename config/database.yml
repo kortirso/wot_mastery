@@ -15,6 +15,6 @@ test:
 
 production:
   <<: *default
-  database: wot_mastery_production
+  database: wot_mastery
   username: wot_mastery
-  password: <%= ENV['WOT_MASTERY_DATABASE_PASSWORD'] %>
+  password: <%= Rails.application.credentials.database&.fetch(:password) %>
