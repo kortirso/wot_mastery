@@ -25,6 +25,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'nokogiri', '~> 1.10'
 
 # Background Jobs
+gem 'redis-namespace'
 gem 'redis-rails'
 gem 'sidekiq', '6.0.7'
 
