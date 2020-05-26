@@ -1,5 +1,5 @@
 class AddStunToExperienceCoefficients < ActiveRecord::Migration[6.0]
-  def change
+  def up
     add_column :experience_coefficients, :stun, :integer
     change_column_default :experience_coefficients, :stun, 0
   end

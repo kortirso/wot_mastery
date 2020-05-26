@@ -1,5 +1,5 @@
 class AddPrecisionToCoefficients < ActiveRecord::Migration[6.0]
-  def change
+  def up
     add_column :experience_coefficients, :precision, :integer
     change_column_default :experience_coefficients, :precision, 0
   end
