@@ -1,0 +1,12 @@
+<footer>
+  <div class='container flex'>
+    <div class='left-footer'>
+    </div>
+    <div class='right-footer'>
+      <p>Wot Mastery 2020</p>
+      <%- I18n.available_locales.each do |locale| %>
+        <%= link_to '', change_locale(locale), class: "flag flag_#{locale}", aria: { label: 'Change locale' } %>
+      <% end %>
+    </div>
+  </div>
+</footer>

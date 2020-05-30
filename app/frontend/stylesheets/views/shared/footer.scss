@@ -1,0 +1,23 @@
+footer {
+  @apply mt-4;
+
+  .container {
+    @apply mx-auto justify-between p-4;
+
+    .flag {
+      display: inline-block;
+      width: 29px;
+      height: 18px;
+      background: url(../images/icons.png);
+      margin-right: 4px;
+
+      &.flag_ru {
+        background-position: -29px -180px;
+      }
+
+      &.flag_en {
+        background-position: 0 -54px;
+      }
+    }
+  }
+}
