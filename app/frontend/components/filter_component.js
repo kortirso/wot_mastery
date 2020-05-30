@@ -8,6 +8,16 @@ window.components.filter = () => {
     tanksList: [],
     sortField: '',
     sortOrder: 1,
+    openedTank: 0,
+    currentTankValues: {
+      damage: 0,
+      kill: 0,
+      assist: 0,
+      block: 0,
+      stun: 0
+    },
+    tankCoefficientModifiers: [5, 4, 1, 0],
+    spgCoefficientModifiers: [5, 0, 0, 5],
     toggle() { this.isOpen = !this.isOpen },
     toggleFilter(type, value) {
       let collection = this[type]
@@ -53,6 +63,39 @@ window.components.filter = () => {
         this.sortOrder = 1
       }
       this.tanksList.sort((a, b) => this.sortOrder * (a.attributes[field] - b.attributes[field]))
+    },
+    toggleOpenedTank(value) {
+      const selectedTank = this.tanksList.filter((tank) => {
+        return tank.id === value
+      })[0]
+      if (selectedTank === this.openedTank) this.openedTank = 0
+      else {
+        this.openedTank = selectedTank
+        this.currentTankValues = {
+          damage: 0,
+          kill: 0,
+          assist: 0,
+          block: 0,
+          stun: 0
+        }
+      }
+    },
+    changeInput({ target }) {
+      const coefficients = this.openedTank.attributes.experience_coefficient.data.attributes
+      const masterExperience = this.openedTank.attributes.master_grade_boundary
+      const needExperience = (masterExperience - (parseInt(target.value) * coefficients.damage + coefficients.bonus) / 1000) / 10
+
+      let coefficientModifiers
+      if (this.openedTank.attributes.type === 'spg') coefficientModifiers = this.spgCoefficientModifiers
+      else coefficientModifiers = this.tankCoefficientModifiers
+
+      this.currentTankValues = {
+        damage: parseInt(target.value),
+        kill: Math.round(coefficientModifiers[0] * needExperience / coefficients.kill),
+        assist: Math.round(coefficientModifiers[1] * 1000 * needExperience / coefficients.assist),
+        block: Math.round(coefficientModifiers[2] * 1000 * needExperience / coefficients.block),
+        stun: Math.round(coefficientModifiers[3] * 1000 * needExperience / coefficients.stun)
+      }
     }
   }
 }

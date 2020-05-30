@@ -17,3 +17,10 @@ en:
       damage_hp_full: Need damage per vehicle health
       precision: Precision
       precision_full: Prediction precision
+    tank:
+      info_header:
+        damage: Damage
+        kills: Kills
+        assist: Assist
+        block: Block
+        stun: Stun

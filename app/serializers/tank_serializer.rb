@@ -10,6 +10,10 @@ class TankSerializer
   attributes :name, :tier
   attribute :master_grade_boundary, &:master_boundary
 
+  attribute :experience_coefficient do |object|
+    ExperienceCoefficientSerializer.new(object.experience_coefficient).serializable_hash
+  end
+
   attribute :type do |object|
     object.tanks_type.name
   end

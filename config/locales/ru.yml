@@ -1,6 +1,8 @@
 ru:
   welcome:
     filters: Фильтры
+    apply: Применить
+    reset: Сбросить
   tanks_list:
     header:
       country: Нация
@@ -17,3 +19,10 @@ ru:
       damage_hp_full: Необходимо урона на прочность техники
       precision: Точность
       precision_full: Точность предсказания
+    tank:
+      info_header:
+        damage: Урон
+        kills: Убить
+        assist: Помощь
+        block: Блок
+        stun: Оглушение

@@ -95,8 +95,8 @@
             </div>
           </div>
           <div class='form-dropdown-actions'>
-            <a class='btn btn-reverse mr-4' x-on:click.prevent @click='resetFilters'>Reset</a>
-            <a class='btn' :class="{ 'disabled': countries.length === 0 && types.length === 0 && tiers.length === 0 && tanks.length === 0 }" x-on:click.prevent @click='if (countries.length !== 0 || types.length !== 0 || tiers.length !== 0 || tanks.length !== 0) { apply() }'>Apply</a>
+            <a class='btn btn-reverse mr-4' x-on:click.prevent @click='resetFilters'><%= t('welcome.reset') %></a>
+            <a class='btn' :class="{ 'disabled': countries.length === 0 && types.length === 0 && tiers.length === 0 && tanks.length === 0 }" x-on:click.prevent @click='if (countries.length !== 0 || types.length !== 0 || tiers.length !== 0 || tanks.length !== 0) { apply() }'><%= t('welcome.apply') %></a>
           </div>
         </div>
       </div>
@@ -134,18 +134,37 @@
         <div class='additional'></div>
       </div>
       <template x-for='tank in tanksList' :key='tank.id'>
-        <div class='tank'>
-          <div class='flag' :type='tank.attributes.country_name.en'><span /></div>
-          <div class='type' :type='tank.attributes.type'><span /></div>
-          <div class='tier' x-text='tank.attributes.tier'></div>
-          <div class='name' x-text="tank.attributes.name['<%= I18n.locale %>']"></div>
-          <div class='first-grade' x-text='tank.attributes.first_grade_boundary'></div>
-          <div class='master-grade' x-text='tank.attributes.master_grade_boundary'></div>
-          <div class='additional' x-text='tank.attributes.damage_for_master'></div>
-          <div class='additional' x-text='tank.attributes.damage_for_master_per_shots'></div>
-          <div class='additional' x-text='tank.attributes.damage_for_master_by_health'></div>
-          <div class='additional' x-text='tank.attributes.coefficient_precision'></div>
-          <div class='additional'></div>
+        <div class='tank-block'>
+          <div class='tank' @click='toggleOpenedTank(tank.id)'>
+            <div class='flag' :type='tank.attributes.country_name.en'><span /></div>
+            <div class='type' :type='tank.attributes.type'><span /></div>
+            <div class='tier' x-text='tank.attributes.tier'></div>
+            <div class='name' x-text="tank.attributes.name['<%= I18n.locale %>']"></div>
+            <div class='first-grade' x-text='tank.attributes.first_grade_boundary'></div>
+            <div class='master-grade' x-text='tank.attributes.master_grade_boundary'></div>
+            <div class='additional' x-text='tank.attributes.damage_for_master'></div>
+            <div class='additional' x-text='tank.attributes.damage_for_master_per_shots'></div>
+            <div class='additional' x-text='tank.attributes.damage_for_master_by_health'></div>
+            <div class='additional' x-text='tank.attributes.coefficient_precision'></div>
+            <div class='additional'></div>
+          </div>
+          <div class='tank-additional-info' x-show='tank.id === openedTank.id'>
+            <div class='tank-additional-info-header'>
+              <p><%= t('tanks_list.tank.info_header.damage') %></p>
+              <p><%= t('tanks_list.tank.info_header.kills') %></p>
+              <p x-show="openedTank.attributes?.type !== 'spg'"><%= t('tanks_list.tank.info_header.assist') %></p>
+              <p x-show="openedTank.attributes?.type !== 'spg'"><%= t('tanks_list.tank.info_header.block') %></p>
+              <p x-show="openedTank.attributes?.type === 'spg'"><%= t('tanks_list.tank.info_header.stun') %></p>
+            </div>
+            <div class='tank-additional-info-ranges'>
+              <input type='range' :min='0' :max='tank.attributes.damage_for_master' :value='currentTankValues.damage' step='100' @input='changeInput'>
+              <p x-text='currentTankValues.damage'></p>
+              <p x-text='currentTankValues.kill'></p>
+              <p x-text='currentTankValues.assist' x-show="openedTank.attributes?.type !== 'spg'"></p>
+              <p x-text='currentTankValues.block' x-show="openedTank.attributes?.type !== 'spg'"></p>
+              <p x-text='currentTankValues.stun' x-show="openedTank.attributes?.type === 'spg'"></p>
+            </div>
+          </div>
         </div>
       </template>
     </div>
