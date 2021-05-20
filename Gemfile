@@ -22,7 +22,7 @@ gem 'webpacker', '~> 4.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # Scraping
-gem 'nokogiri', '~> 1.10'
+gem 'nokogiri', '~> 1.11'
 
 # Background Jobs
 gem 'redis-namespace'
